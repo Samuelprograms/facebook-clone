@@ -1,86 +1,78 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
+import {
+  SaveIcon,
+  UserGroupIcon,
+  PlayIcon,
+  ClockIcon,
+  UsersIcon,
+  FlagIcon,
+  CalendarIcon,
+  TrendingUpIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+} from "@heroicons/react/solid";
+import type { NextPage } from "next";
+import Head from "next/head";
+import { useState } from "react";
+import SidebarItem from "../components/SidebarItem";
+import useTheme from "../Hooks/useTheme";
 
 const Home: NextPage = () => {
+  const [showMore, setShowMore] = useState<boolean>(false);
+  const { toogleTheme } = useTheme();
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-2">
+    <div className="grid grid-cols-3 h-full">
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
-        <h1 className="text-6xl font-bold">
-          Welcome to{' '}
-          <a className="text-blue-600" href="https://nextjs.org">
-            Next.js!
-          </a>
-        </h1>
-
-        <p className="mt-3 text-2xl">
-          Get started by editing{' '}
-          <code className="rounded-md bg-gray-100 p-3 font-mono text-lg">
-            pages/index.tsx
-          </code>
-        </p>
-
-        <div className="mt-6 flex max-w-4xl flex-wrap items-center justify-around sm:w-full">
-          <a
-            href="https://nextjs.org/docs"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Find in-depth information about Next.js features and its API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Learn &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Learn about Next.js in an interactive course with quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Examples &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Discover and deploy boilerplate example Next.js projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Deploy &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className="flex h-24 w-full items-center justify-center border-t">
-        <a
-          className="flex items-center justify-center gap-2"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-        </a>
-      </footer>
+      {/* Left */}
+      <div className="max-w-sm px-3 pb-3 h-full overflow-y-scroll">
+        <button onClick={() => toogleTheme()}>toggle</button>
+        <SidebarItem
+          title="Samuel Cerón"
+          image={{
+            src: "https://scontent.fbog19-1.fna.fbcdn.net/v/t39.30808-1/278908693_533230835094989_3204616946964746643_n.jpg?stp=dst-jpg_p160x160&_nc_cat=104&ccb=1-7&_nc_sid=7206a8&_nc_eui2=AeGCAok6fn4T4P8Oe36PL1EkQkf-IK4QOgNCR_4grhA6Ayj2lfWJEMY21duyVfQ0213tH4e_uHGJqQE1nhdjCM52&_nc_ohc=4amdClM5v44AX8Yimue&_nc_ht=scontent.fbog19-1.fna&oh=00_AT_zPBlCCp_gQoJUtr9EtEKOLTh4frZJjiwRQ7svVQeI3A&oe=62B1B5BE",
+          }}
+        />
+        <SidebarItem title="Friends" Icon={UserGroupIcon} />
+        <SidebarItem title="Saved" Icon={SaveIcon} />
+        <SidebarItem title="Watch" Icon={PlayIcon} />
+        <SidebarItem title="Memories" Icon={ClockIcon} />
+        <SidebarItem title="Communities" Icon={UsersIcon} />
+        <SidebarItem title="Pages" Icon={FlagIcon} />
+        <SidebarItem title="Events" Icon={CalendarIcon} />
+        <SidebarItem title="Most Recent" Icon={TrendingUpIcon} />
+        {showMore && (
+          <>
+            <SidebarItem title="Friends" Icon={UserGroupIcon} />
+            <SidebarItem title="Friends" Icon={UserGroupIcon} />
+            <SidebarItem title="Friends" Icon={UserGroupIcon} />
+            <SidebarItem title="Friends" Icon={UserGroupIcon} />
+            <SidebarItem title="Friends" Icon={UserGroupIcon} />
+            <SidebarItem title="Friends" Icon={UserGroupIcon} />
+            <SidebarItem title="Friends" Icon={UserGroupIcon} />
+            <SidebarItem title="Friends" Icon={UserGroupIcon} />
+            <SidebarItem title="Friends" Icon={UserGroupIcon} />
+            <SidebarItem title="Friends" Icon={UserGroupIcon} />
+            <SidebarItem title="Friends" Icon={UserGroupIcon} />
+            <SidebarItem title="Friends" Icon={UserGroupIcon} />
+            <SidebarItem title="Friends" Icon={UserGroupIcon} />
+            <SidebarItem title="Friends" Icon={UserGroupIcon} />
+            <SidebarItem title="Friends" Icon={UserGroupIcon} />
+          </>
+        )}
+        <SidebarItem
+          title={`Show ${showMore ? "Less" : "More"}`}
+          Icon={showMore ? ChevronUpIcon : ChevronDownIcon}
+          onClick={() => setShowMore(!showMore)}
+        />
+      </div>
+      {/* Center */}
+      <div>center</div>
+      {/* Right */}
+      <div>right</div>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
