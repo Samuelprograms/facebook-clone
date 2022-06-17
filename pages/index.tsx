@@ -27,7 +27,7 @@ interface Props {
   data: object[];
 }
 
-const Home: NextPage = ({ user, data }: Props) => {
+const Home = ({ user, data }: Props) => {
   const [showMore, setShowMore] = useState<boolean>(false);
   return (
     <div className="grid grid-cols-1 h-full md:grid-cols-2 lg:grid-cols-3">
