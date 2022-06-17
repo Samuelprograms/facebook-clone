@@ -1,18 +1,24 @@
-import { signIn, signOut, useSession } from "next-auth/react";
-import React, { useEffect } from "react";
+import React from "react";
+import { NextPageContext } from "next";
+import { getSession, signIn } from "next-auth/react";
 
 const Login = () => {
-  const { data: session } = useSession();
-  useEffect(() => {
-    console.log(session);
-  }, []);
-
-  return (
-    <>
-      <button onClick={() => signIn("facebook")}> login</button>;
-      <button onClick={() => signOut()}> logout</button>;
-    </>
-  );
+  return <button onClick={() => signIn("facebook")}> login</button>;
 };
 
 export default Login;
+
+export const getServerSideProps = async ({ req }: NextPageContext) => {
+  const session = await getSession({ req });
+  if (session) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/",
+      },
+    };
+  }
+  return {
+    props: {},
+  };
+};

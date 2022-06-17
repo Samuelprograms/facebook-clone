@@ -6,13 +6,15 @@ interface Props {
   Icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   rounded?: boolean;
   path?: string;
+  onClick?: () => void;
 }
 
-const NavBarIcon = ({ title, Icon, rounded, path }: Props) => {
+const NavBarIcon = ({ title, Icon, rounded, path, onClick }: Props) => {
   const { pathname } = useRouter();
   if (rounded) {
     return (
       <div
+        onClick={onClick}
         title={title}
         className="w-10 h-10 rounded-full bg-gray-200 grid place-items-center cursor-pointer hover:bg-gray-100 dark:bg-neutral-700 dark:hover:bg-neutral-600"
       >
@@ -22,6 +24,7 @@ const NavBarIcon = ({ title, Icon, rounded, path }: Props) => {
   }
   return (
     <div
+      onClick={onClick}
       title={title}
       className={`w-32 h-11 rounded grid place-items-center cursor-pointer dark:hover:bg-neutral-700 ${
         path === pathname ? "border-b-4 border-blue-500" : ""

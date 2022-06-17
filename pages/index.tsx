@@ -11,27 +11,36 @@ import {
   ChevronUpIcon,
 } from "@heroicons/react/solid";
 import type { NextPage } from "next";
+import { getSession } from "next-auth/react";
 import Head from "next/head";
 import { useState } from "react";
+import Feed from "../components/Feed";
 import SidebarItem from "../components/SidebarItem";
-import useTheme from "../Hooks/useTheme";
+import { shuffleArray } from "../utils/arrayUtils";
 
-const Home: NextPage = () => {
+interface Props {
+  user: {
+    name: string;
+    email: string;
+    image: string;
+  };
+  data: object[];
+}
+
+const Home: NextPage = ({ user, data }: Props) => {
   const [showMore, setShowMore] = useState<boolean>(false);
-  const { toogleTheme } = useTheme();
   return (
-    <div className="grid grid-cols-3 h-full">
+    <div className="grid grid-cols-1 h-full md:grid-cols-2 lg:grid-cols-3">
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {/* Left */}
-      <div className="max-w-sm px-3 pb-3 h-full overflow-y-scroll">
-        <button onClick={() => toogleTheme()}>toggle</button>
+      <div className="hidden md:inline-block max-w-sm px-3 pb-3 h-full overflow-y-scroll">
         <SidebarItem
-          title="Samuel Cerón"
+          title={user.name}
           image={{
-            src: "https://scontent.fbog19-1.fna.fbcdn.net/v/t39.30808-1/278908693_533230835094989_3204616946964746643_n.jpg?stp=dst-jpg_p160x160&_nc_cat=104&ccb=1-7&_nc_sid=7206a8&_nc_eui2=AeGCAok6fn4T4P8Oe36PL1EkQkf-IK4QOgNCR_4grhA6Ayj2lfWJEMY21duyVfQ0213tH4e_uHGJqQE1nhdjCM52&_nc_ohc=4amdClM5v44AX8Yimue&_nc_ht=scontent.fbog19-1.fna&oh=00_AT_zPBlCCp_gQoJUtr9EtEKOLTh4frZJjiwRQ7svVQeI3A&oe=62B1B5BE",
+            src: `${user.image}`,
           }}
         />
         <SidebarItem title="Friends" Icon={UserGroupIcon} />
@@ -68,11 +77,31 @@ const Home: NextPage = () => {
         />
       </div>
       {/* Center */}
-      <div>center</div>
+      <Feed data={data} />
       {/* Right */}
-      <div>right</div>
+      <div className="hidden lg:inline-block">right</div>
     </div>
   );
 };
 
 export default Home;
+
+export const getServerSideProps = async ({ req }: any) => {
+  const response = await fetch("https://jsonplaceholder.typicode.com/photos");
+  const data = await response.json();
+  const session = await getSession({ req });
+  if (!session) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/login",
+      },
+    };
+  }
+  return {
+    props: {
+      user: session.user,
+      data: shuffleArray(data.slice(0, 100)),
+    },
+  };
+};

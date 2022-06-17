@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import NavBarIcon from "./NavBarIcon";
 import {
   BellIcon,
@@ -14,8 +14,13 @@ import {
   UserGroupIcon,
 } from "@heroicons/react/outline";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import NavbarMenu from "./NavbarMenu";
 
 const NavBar = () => {
+  const [showMenu, setShowMenu] = useState(false);
+  const { data } = useSession();
+
   return (
     <div className="flex fixed top-0 w-full justify-between px-3 bg-white py-1 shadow-md dark:bg-neutral-800">
       {/* Left */}
@@ -50,10 +55,12 @@ const NavBar = () => {
         <div className="hidden xl:flex items-center cursor-pointer space-x-1 hover:bg-gray-100 rounded-full p-1 pr-2 dark:hover:bg-neutral-600">
           <img
             className="h-7 rounded-full"
-            src="https://scontent.fbog19-1.fna.fbcdn.net/v/t39.30808-1/278908693_533230835094989_3204616946964746643_n.jpg?stp=dst-jpg_p160x160&_nc_cat=104&ccb=1-7&_nc_sid=7206a8&_nc_eui2=AeGCAok6fn4T4P8Oe36PL1EkQkf-IK4QOgNCR_4grhA6Ayj2lfWJEMY21duyVfQ0213tH4e_uHGJqQE1nhdjCM52&_nc_ohc=4amdClM5v44AX8Yimue&_nc_ht=scontent.fbog19-1.fna&oh=00_AT_zPBlCCp_gQoJUtr9EtEKOLTh4frZJjiwRQ7svVQeI3A&oe=62B1B5BE"
+            src={data?.user?.image || ""}
             alt=""
           />
-          <span className="font-semibold dark:text-white">Samuel</span>
+          <span className="font-semibold dark:text-white">
+            {data?.user?.name?.split(" ")[0]}
+          </span>
         </div>
         <div className="flex space-x-3">
           <NavBarIcon
@@ -63,7 +70,13 @@ const NavBar = () => {
           />
           <NavBarIcon title="Gamming" Icon={MailIcon} rounded={true} />
           <NavBarIcon title="Gamming" Icon={BellIcon} rounded={true} />
-          <NavBarIcon title="Gamming" Icon={ChevronDownIcon} rounded={true} />
+          <NavBarIcon
+            title="Gamming"
+            Icon={ChevronDownIcon}
+            rounded={true}
+            onClick={() => setShowMenu(!showMenu)}
+          />
+          {showMenu && <NavbarMenu />}
         </div>
       </div>
     </div>
