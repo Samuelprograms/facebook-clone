@@ -42,7 +42,11 @@ const Post = ({ data: { url, thumbnailUrl, title } }: any) => {
 				</div>
 			</div>
 			<div className="flex items-center justify-between space-x-2 px-4 ">
-				<img src={data?.user?.image} alt="" className="rounded-full w-8" />
+				<img
+					src={data?.user?.image || ""}
+					alt=""
+					className="rounded-full w-8"
+				/>
 				<div className="flex flex-1 bg-neutral-100 px-4 py-2 rounded-full dark:bg-neutral-700 dark:text-white">
 					<input
 						type=""
