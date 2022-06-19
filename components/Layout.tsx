@@ -1,4 +1,3 @@
-import { signOut } from "next-auth/react";
 import React from "react";
 import NavBar from "./NavBar";
 
@@ -9,7 +8,7 @@ interface Props {
 const Layout = ({ children }: Props) => {
   return (
     <div className="h-screen">
-      <div className={`pt-16 h-full bg-white dark:bg-neutral-900`}>
+      <div className={`pt-16 h-full bg-slate-100 dark:bg-neutral-900`}>
         <NavBar />
         {children}
       </div>
